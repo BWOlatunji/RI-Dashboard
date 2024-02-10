@@ -15,7 +15,7 @@ riMapServer <- function(id, dataset) {
     function(input, output, session) {
       
       # map data
-      map_df <- reactive({
+      map_tbl <- reactive({
         df <- dataset |>
           filter(cce_quantity>0) |> 
           group_by(state_name) |> 
@@ -53,17 +53,18 @@ riMapServer <- function(id, dataset) {
                     lat1 = 4,
                     lng2 = 14,
                     lat2 = 13) |> 
-          addCircleMarkers(data = map_df(),
+          addCircleMarkers(data = map_tbl(),
                            label =~lapply(label, htmltools::HTML),
                            fillColor = "#036666",
                            radius = 6,
                            fillOpacity = 1,
                            stroke = F
           )
-      })
+      }) |> 
+        bindCache(map_tbl())
       
       
-      observeEvent(input$map_plot_marker_click, {
+      observe({
         # Format the values to have 6 decimal places without rounding
         # and convert the formatted strings back to numeric if needed
         lat <- round(input$map_plot_marker_click$lat, 6)
@@ -73,7 +74,7 @@ riMapServer <- function(id, dataset) {
         # are within a small range around the target values. The range (in this case, ±0.000001)
         # is chosen based on your requirement for 6 decimal places precision without rounding.
         
-        clicked_loc <- map_df() |>
+        clicked_loc <- map_tbl() |>
           filter(between(latitude, lat - 0.000001, lat + 0.000001) &
                    between(longitude, lng - 0.000001, lng + 0.000001)) |>
           select(state_name) |>
@@ -117,7 +118,8 @@ riMapServer <- function(id, dataset) {
                      clusterOptions = markerClusterOptions(),
                      layerId = ~global_id)
         
-      })
+      }) |> 
+        bindEvent(input$map_plot_marker_click)
       
     }
   )
