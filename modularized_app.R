@@ -31,7 +31,7 @@ ui <- page_sidebar(
     "table-color" = "#036666",
     base_font = font_google("Montserrat", local = TRUE)
   ),
-  h3("Routine Immunization Dashboard"),
+  h2("Routine Immunization Dashboard"),
   sidebar = sidebar(
     width = 275,
     actionButton("addTripPlan", "Add RI Trip Plan"),
@@ -43,7 +43,7 @@ ui <- page_sidebar(
              nav_panel(value = "CCEs",
                title = p(tags$img(
                  src = "./images/noun-cold-chain-logistics-5729734.svg",
-                 width = "30px",
+                 width = "20px",height="15px",
                  class = "pull-left"
                ),"Cold Chain Equipment Distribution"), 
                br(),
