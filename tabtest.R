@@ -1,27 +1,26 @@
 
-library(shiny)
 
-ui <- fluidPage(
-  textOutput("text"),
-  tabsetPanel(id = "tabs",
-              tabPanel(
-                "Signal", id = "signal", plotOutput("signalplot", height=1000)
-              ),
-              tabPanel("low", id = "low", plotOutput("looseplot", height=1000)),
-              tabPanel("medium", id = "medium", plotOutput("mediumplot", height=1000)),
-              tabPanel("tight", id = "tight", plotOutput("tightplot", height=1000))
+  ui <- page_sidebar(
+    sidebar = sidebar(width = 275, 
+                      actionButton("add", "Add 'Dynamic' tab"),
+                      actionButton("remove", "Remove 'Foo' tab")),
+    nav_spacer(),
+    navset_tab(
+      id = "tabs",
+      nav_panel("Hello", "hello"),
+      nav_panel("Foo", "foo"),
+      nav_panel("Bar", "bar tab")
+    )
   )
-)
-
-server <- function(input, output, session) {
-  output$signalplot<-renderPlot({
-    plot(c(6,7,8),c(5,7,5))
-  })
-  output$looseplot<-renderPlot({
-    plot(c(7,7,8),c(5,0,5))
-  })
-  
-  output$text <- renderText({paste0("You are viewing tab \"", input$tabs, "\"")})
-}
-
-shinyApp(ui, server)
+  server <- function(input, output) {
+    observeEvent(input$add, {
+      nav_insert(
+        "tabs", target = "Bar", select = TRUE,
+        nav_panel("Dynamic", "Dynamically added content")
+      )
+    })
+    observeEvent(input$remove, {
+      nav_remove("tabs", target = "Foo")
+    })
+  }
+  shinyApp(ui, server)
