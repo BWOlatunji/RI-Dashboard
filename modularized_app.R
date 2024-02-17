@@ -4,12 +4,7 @@ library(tidyverse)
 library(bsicons)
 library(thematic)
 
-library(osmdata)    # Open Street Map Overpass API
-library(osrm)       # Open Street Map Routing API
-
-library(sf)         # Simple Features
-library(nngeo)      # Nearest Neighbors
-library(mapview)    # Interactive Maps
+library(sf)         
 library(leaflet)
 
 
@@ -31,7 +26,7 @@ ui <- page_sidebar(
     "table-color" = "#036666",
     base_font = font_google("Montserrat", local = TRUE)
   ),
-  h2("Routine Immunization Dashboard"),
+  h4(tags$b("Routine Immunization Dashboard")),
   sidebar = sidebar(
     width = 275,
     actionButton("addTripPlan", "Add RI Trip Plan"),
