@@ -109,13 +109,14 @@ riMapServer <- function(id, dataset) {
                  
                  observe({
                    # Format the values to have 6 decimal places without rounding
-                   # and convert the formatted strings back to numeric if needed
+                   # and convert the formatted strings back to numeric
                    lat <- round(input$map_plot_marker_click$lat, 6)
                    lng <- round(input$map_plot_marker_click$lng, 6)
                    
                    # In this code, I'm using the between function to check if the latitude and longitude
-                   # are within a small range around the target values. The range (in this case, ±0.000001)
-                   # is chosen based on your requirement for 6 decimal places precision without rounding.
+                   # are within a small range around the target values. 
+                   # The range, in this case, ±0.000001 is chosen based on our requirement 
+                   # for 6 decimal places precision without rounding.
                    
                    clicked_state <- map_tbl() |>
                      filter(
@@ -138,7 +139,6 @@ riMapServer <- function(id, dataset) {
                      select(functional_status, n) |>
                      set_names(c("Functional Status", "Count"))
                    
-                   # uiOutput("cards")
                    output$cards <- renderUI({
                      map(1:nrow(dt), function(i) {
                        create_card_content(dt[i,])
@@ -146,9 +146,9 @@ riMapServer <- function(id, dataset) {
                    })
                    # Display the clicked state in the UI
                    output$selected_state <- renderUI({
-                     h4(style = "color: green;text-transform: uppercase;margin:3px;", clicked_state)
+                     h4(style = "color: green;text-transform: uppercase;margin:3px;", 
+                        clicked_state)
                    })
-                   
                    
                    # get data based on state name
                    st_map_data <- dataset |>
