@@ -43,10 +43,13 @@ The project was structured to promote code modularity, with separate R scripts f
 ### **Directory Layout**
 
 ```         
-markdownCopy code
+- app.R
+- R/
+  - riMapModule.R
+  - riOverviewModule.R
+- data/
+  - health_care_facilities_geo.rds
 ```
-
-[`-`]{.underline}`app.R - R/   - riMapModule.R   - riOverviewModule.R - data/   - health_care_facilities_geo.rds`
 
 ## **Development Process**
 
