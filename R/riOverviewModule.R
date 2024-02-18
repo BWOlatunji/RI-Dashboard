@@ -77,8 +77,4 @@ riOverviewServer <- function(id, dataset) {
   )
 }
 
-p(tags$img(
-  src = "./images/noun-cold-chain-logistics-5729734.svg",
-  width = "30px",
-  class = "pull-left"
-),"Cold Chain Equipment Distribution")
+

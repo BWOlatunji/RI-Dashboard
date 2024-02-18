@@ -70,7 +70,7 @@ riMapServer <- function(id, dataset) {
                      addTiles() |>  # Add a base layer
                      setView(lng = 9.072264,
                              lat = 7.491302,
-                             zoom = 10) |>
+                             zoom = 15) |>
                      fitBounds(
                        lng1 = 2.68,
                        lat1 = 4.07,
@@ -81,7 +81,7 @@ riMapServer <- function(id, dataset) {
                        data = map_tbl(),
                        label =  ~ lapply(label, htmltools::HTML),
                        fillColor = "#036666",
-                       radius = 6,
+                       radius = 10,
                        fillOpacity = 1,
                        stroke = F
                      )

@@ -14,7 +14,7 @@ source("R/riOverviewModule.R")
 health_care_facilities_geo <-
   read_rds("data/health_care_facilities_geo.rds")
 
-ui <- page_sidebar(
+ui <- page_fillable(h4(tags$b("Routine Immunization Dashboard")),
   # Set the CSS theme
   theme = bs_theme(
     bootswatch = "flatly",
@@ -26,14 +26,6 @@ ui <- page_sidebar(
     "table-color" = "#036666",
     base_font = font_google("Montserrat", local = TRUE)
   ),
-  h4(tags$b("Routine Immunization Dashboard")),
-  sidebar = sidebar(
-    width = 275,
-    actionButton("addTripPlan", "Add RI Trip Plan"),
-    actionButton("addTripBudget", "Add RI Trip Budget") #,
-    #actionButton("remove", "Remove 'Foo' tab")
-  ),
-  nav_spacer(),
   navset_tab(id = "navTabs",
              nav_panel(value = "CCEs",
                title = p(tags$img(
