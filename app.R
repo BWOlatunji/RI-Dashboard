@@ -14,7 +14,7 @@ source("R/riOverviewModule.R")
 health_care_facilities_geo <-
   read_rds("data/health_care_facilities_geo.rds")
 
-ui <- page_fillable(h4(tags$b("Routine Immunization Dashboard")),
+ui <- page_fillable(h4(tags$img(width = "25px",height="35px",src= "./images/ngr_logo.png"), tags$b("Routine Immunization Dashboard")),
   # Set the CSS theme
   theme = bs_theme(
     bootswatch = "flatly",
