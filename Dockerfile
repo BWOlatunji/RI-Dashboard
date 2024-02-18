@@ -1,17 +1,17 @@
-# Base R Shiny image
+# Use an official R runtime as a parent image
 FROM rocker/shiny
 
-# Make a directory in the container
-RUN mkdir /home/shiny-app
+# Set the working directory in the container
+WORKDIR /app
 
-# Install R dependencies
-RUN R -e "install.packages(c('shiny', 'tidyverse', 'bslib', 'bsicons','thematic','sf','leaflet'))"
+# Copy the entire project directory into the container
+COPY . /app
 
-# Copy the Shiny app code
-COPY app.R /home/shiny-app/app.R
+# Install any needed packages specified in the R file
+RUN R -e "install.packages(c('shiny', 'bslib', 'tidyverse', 'bsicons', 'sf', 'leaflet', 'thematic'), dependencies=TRUE)"
 
-# Expose the application port
-EXPOSE 8180
+# Make port 3838 available to the world outside this container
+EXPOSE 3838
 
-# Run the R Shiny app
-CMD Rscript /home/shiny-app/app.R
+# Run app.R when the container launches
+CMD ["R", "-e", "shiny::runApp('/app/app.R', host='0.0.0.0', port=3838)"]
