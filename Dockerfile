@@ -1,5 +1,5 @@
-# Use an official R runtime as a parent image
-FROM rocker/shiny
+# parent image
+FROM rocker/shiny-verse
 
 # Set the working directory in the container
 WORKDIR /app
