@@ -64,6 +64,8 @@ riMapServer <- function(id, dataset) {
                    
                  })
                  
+                 clickedState <- reactiveVal(NULL)
+                 
                  output$map_plot <- renderLeaflet({
                    # Create a leaflet map
                    leaflet() |>
@@ -132,8 +134,10 @@ riMapServer <- function(id, dataset) {
                      return()
                    }
                    
+                   clickedState(clicked_state)
+                   
                    dt <- dataset |>
-                     filter(state_name == clicked_state) |>
+                     filter(state_name == clickedState()) |>
                      count(functional_status) |>
                      st_drop_geometry() |>
                      select(functional_status, n) |>
@@ -147,12 +151,12 @@ riMapServer <- function(id, dataset) {
                    # Display the clicked state in the UI
                    output$selected_state <- renderUI({
                      h4(style = "color: green;text-transform: uppercase;margin:3px;", 
-                        clicked_state)
+                        clickedState())
                    })
                    
                    # get data based on state name
                    st_map_data <- dataset |>
-                     filter(state_name == clicked_state) |>
+                     filter(state_name == clickedState()) |>
                      mutate(
                        label = paste0(
                          "<center>",
@@ -195,6 +199,7 @@ riMapServer <- function(id, dataset) {
                    
                  }) |>
                    bindEvent(input$map_plot_marker_click)
+                 
                  
                })
 }

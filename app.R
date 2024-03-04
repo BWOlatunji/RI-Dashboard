@@ -14,7 +14,9 @@ source("R/riOverviewModule.R")
 health_care_facilities_geo <-
   read_rds("data/health_care_facilities_geo.rds")
 
-ui <- page_fillable(h4(tags$img(width = "25px",height="35px",src= "./images/ngr_logo.png"), tags$b("Routine Immunization Dashboard")),
+ui <- page_fillable(
+  tags$style(" #riOUI-value_boxes { margin:0px;};"),
+  h4(tags$img(width = "25px",height="35px",src= "./images/ngr_logo.png"), tags$b("Routine Immunization Dashboard")),
   # Set the CSS theme
   theme = bs_theme(
     bootswatch = "flatly",
@@ -36,17 +38,19 @@ ui <- page_fillable(h4(tags$img(width = "25px",height="35px",src= "./images/ngr_
                br(),
                div(
                  div(riOverviewUI("riOUI")),
-                 div(style = "margin:10px;padding:10px;",
-                     riMapUI("mymap"))
+                 layout_columns(
+                   class = "mb-0",
+                   riMapUI("riMap")
+                 )
                ),
                
              ))
 )
 
 server <- function(input, output, session) {
-  riMapServer(id = "mymap", dataset = health_care_facilities_geo)
   riOverviewServer("riOUI", dataset = health_care_facilities_geo)
   
+  riMapServer(id = "riMap", dataset = health_care_facilities_geo)
   observeEvent(input$addTripPlan, {
     nav_insert(
       "navTabs", target = "CCEs", select = TRUE,
