@@ -51,12 +51,6 @@ server <- function(input, output, session) {
   riOverviewServer("riOUI", dataset = health_care_facilities_geo)
   
   riMapServer(id = "riMap", dataset = health_care_facilities_geo)
-  observeEvent(input$addTripPlan, {
-    nav_insert(
-      "navTabs", target = "CCEs", select = TRUE,
-      nav_panel("Trip Plan", "The trip plan would be added here")
-    )
-  })
   
 }
 
